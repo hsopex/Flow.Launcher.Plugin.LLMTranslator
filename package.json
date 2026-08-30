@@ -1,0 +1,18 @@
+{
+  "name": "flow-launcher-plugin-llm-translator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Flow Launcher AI translation plugin for Chat Completions, Responses, and Claude Messages APIs",
+  "main": "main.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check main.js && node --check src/application.js && node --check src/adapters.js",
+    "package": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1",
+    "package:local": "npm run check && npm test && npm run package"
+  },
+  "license": "MIT"
+}

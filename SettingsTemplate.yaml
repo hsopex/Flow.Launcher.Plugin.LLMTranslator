@@ -1,0 +1,174 @@
+#$schema: https://www.flowlauncher.com/schemas/settings-template.schema.json
+body:
+  - type: textBlock
+    attributes:
+      description: AI 翻译设置 / AI Translation Settings
+
+  - type: textBlock
+    attributes:
+      description: 基础 / General
+
+  - type: dropdown
+    attributes:
+      name: defaultProfile
+      label: 默认 API 配置 / Default API profile
+      description: 未使用 @配置名 时采用此配置。 / Used when a query does not start with @profile.
+      defaultValue: Chat Completions
+      options:
+        - Chat Completions
+        - Responses
+        - Claude
+
+  - type: dropdown
+    attributes:
+      name: translationMode
+      label: 默认翻译模式 / Default translation mode
+      description: 智能双向会识别中文并译为英文，其他语言译为简体中文。 / Smart bilingual detects Chinese and translates it to English; other languages are translated to Simplified Chinese.
+      defaultValue: Smart bilingual / 智能双向
+      options:
+        - Smart bilingual / 智能双向
+        - Custom language pair / 自定义语言方向
+
+  - type: separator
+    attributes:
+      name: generalSeparator
+
+  - type: textBlock
+    attributes:
+      description: 自定义语言方向 / Custom language pair
+
+  - type: input
+    attributes:
+      name: sourceLanguage
+      label: 源语言 / Source language
+      description: 仅“自定义语言方向”模式以及 tt r、tt :set 使用。例如 en、ja、auto。 / Used by Custom mode, tt r, and tt :set only.
+      defaultValue: en
+
+  - type: input
+    attributes:
+      name: targetLanguage
+      label: 目标语言 / Target language
+      description: 仅“自定义语言方向”模式以及 tt r、tt :set 使用。例如 zh-CN、ja。 / Used by Custom mode, tt r, and tt :set only.
+      defaultValue: zh-CN
+
+  - type: input
+    attributes:
+      name: requestTimeoutSeconds
+      label: 请求超时（秒）/ Request timeout (seconds)
+      description: "可输入 1–120，默认 30。 / Accepted range: 1–120; default: 30."
+      defaultValue: "30"
+
+  - type: input
+    attributes:
+      name: maxOutputTokens
+      label: 最大输出 Token / Maximum output tokens
+      description: "用于 Responses 和 Claude；可输入 1–32768。 / Used by Responses and Claude; accepted range: 1–32768."
+      defaultValue: "2048"
+
+  - type: separator
+    attributes:
+      name: chatSeparator
+
+  - type: textBlock
+    attributes:
+      description: Chat Completions 配置 / Chat Completions profile
+
+  - type: input
+    attributes:
+      name: chatAlias
+      label: 配置名 / Profile name
+      description: 单个词；可在查询中使用 @chat。 / One word; use it as @chat in a query.
+      defaultValue: chat
+
+  - type: input
+    attributes:
+      name: chatBaseUrl
+      label: Base URL
+      description: 自动追加 /chat/completions；若已包含则不会重复追加。 / The endpoint is appended only when needed.
+      defaultValue: https://api.openai.com/v1
+
+  - type: passwordBox
+    attributes:
+      name: chatApiKey
+      label: API 密钥 / API key
+      description: 保存在 Flow Launcher 的插件设置中。 / Stored in Flow Launcher plugin settings.
+      defaultValue: ""
+
+  - type: input
+    attributes:
+      name: chatModel
+      label: 模型 / Model
+      description: 填写当前服务支持的模型 ID。 / Enter a model ID supported by this service.
+      defaultValue: ""
+
+  - type: separator
+    attributes:
+      name: responsesSeparator
+
+  - type: textBlock
+    attributes:
+      description: OpenAI Responses 配置 / OpenAI Responses profile
+
+  - type: input
+    attributes:
+      name: responsesAlias
+      label: 配置名 / Profile name
+      description: 单个词；可在查询中使用 @responses。 / One word; use it as @responses in a query.
+      defaultValue: responses
+
+  - type: input
+    attributes:
+      name: responsesBaseUrl
+      label: Base URL
+      description: 自动追加 /responses；若已包含则不会重复追加。 / The endpoint is appended only when needed.
+      defaultValue: https://api.openai.com/v1
+
+  - type: passwordBox
+    attributes:
+      name: responsesApiKey
+      label: API 密钥 / API key
+      description: 保存在 Flow Launcher 的插件设置中。 / Stored in Flow Launcher plugin settings.
+      defaultValue: ""
+
+  - type: input
+    attributes:
+      name: responsesModel
+      label: 模型 / Model
+      description: 填写当前服务支持的模型 ID。 / Enter a model ID supported by this service.
+      defaultValue: ""
+
+  - type: separator
+    attributes:
+      name: claudeSeparator
+
+  - type: textBlock
+    attributes:
+      description: Claude Messages 配置 / Claude Messages profile
+
+  - type: input
+    attributes:
+      name: claudeAlias
+      label: 配置名 / Profile name
+      description: 单个词；可在查询中使用 @claude。 / One word; use it as @claude in a query.
+      defaultValue: claude
+
+  - type: input
+    attributes:
+      name: claudeBaseUrl
+      label: Base URL
+      description: 自动追加 /messages；若已包含则不会重复追加。 / The endpoint is appended only when needed.
+      defaultValue: https://api.anthropic.com/v1
+
+  - type: passwordBox
+    attributes:
+      name: claudeApiKey
+      label: API 密钥 / API key
+      description: 保存在 Flow Launcher 的插件设置中。 / Stored in Flow Launcher plugin settings.
+      defaultValue: ""
+
+  - type: input
+    attributes:
+      name: claudeModel
+      label: 模型 / Model
+      description: 填写当前服务支持的模型 ID。 / Enter a model ID supported by this service.
+      defaultValue: ""

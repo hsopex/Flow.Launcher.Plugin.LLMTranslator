@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.zip
+*.log
+.llm-translator-state.json
+.idea/
+.vscode/
