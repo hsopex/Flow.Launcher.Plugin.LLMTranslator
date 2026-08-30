@@ -7,7 +7,7 @@
   "Author": "hsope",
   "Version": "0.1.0",
   "Language": "javascript",
-  "Website": "https://github.com/hsope/Flow.Launcher.Plugin.LLMTranslator",
+  "Website": "https://github.com/hsopex/Flow.Launcher.Plugin.LLMTranslator",
   "ExecuteFileName": "main.js",
   "IcoPath": "Images\\app.svg",
   "MinimumAppVersion": "2.0.0"
