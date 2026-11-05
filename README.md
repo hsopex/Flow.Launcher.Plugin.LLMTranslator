@@ -1,116 +1,121 @@
 # LLM Translator for Flow Launcher
 
-一个使用 Node.js 编写的 Flow Launcher AI 翻译插件。支持以下三类 HTTP API，并可在 Flow Launcher 设置页中分别配置：
+English | [简体中文](README.zh-CN.md)
+
+An AI translation plugin for Flow Launcher written in Node.js. It supports the following three HTTP API styles, each configurable independently on the plugin's settings page:
 
 - OpenAI-compatible Chat Completions API
 - OpenAI Responses API
 - Anthropic-compatible Claude Messages API
 
-插件默认使用 `tt` 作为触发词。为了避免 Flow Launcher 在每次键入时重复调用计费 API，普通查询只显示确认结果；按 Enter 后才会发送一次翻译请求。
+The plugin uses `tt` as its default action keyword. To avoid calling a billable API on every keystroke, a plain query only shows a confirmation result; a single translation request is sent after you press Enter.
 
-## 安装
+## Installation
 
-项目要求 Flow Launcher 2.x 和 Node.js 18 或更高版本。发布包不含外部运行时依赖，不需要执行 `npm install`。
+The project requires Flow Launcher 2.x and Node.js 16.17 or later. The repository pins Node 16 through mise using `.mise.toml`. The release package has no external runtime dependencies, so `npm install` is not required.
 
-开发时可以让 Flow Launcher 从本地目录安装：
+During development you can have Flow Launcher install from a local directory:
 
 ```text
 pm install C:\path\to\Flow.Launcher.Plugin.LLMTranslator
 ```
 
-也可以运行 `npm run package`，然后安装 `dist` 中生成的 ZIP 文件。
+Alternatively, run `npm run package` and install the ZIP file generated in `dist`.
 
-## 配置
+## Configuration
 
-在 Flow Launcher 设置中打开 `LLM Translator`。设置页采用中英双语分区，包含基础设置、自定义语言方向以及三套固定 API 配置。
+Open `LLM Translator` in the Flow Launcher settings. The settings page uses an English interface: quick start and common queries at the top, followed by basic settings, language direction, advanced options, and three fixed API profiles.
 
-默认翻译模式是“智能双向”：插件让所选模型识别输入语言，中文（简体或繁体）译为自然英文，其他语言译为简体中文。选择“自定义语言方向”后，才会使用源语言和目标语言字段。
+The default translation mode is "Smart bilingual": the plugin asks the selected model to detect the input language, translating Chinese (Simplified or Traditional) into natural English and other languages into Simplified Chinese. The source and target language fields are only used after you select "Custom language pair".
 
-每套配置包括：
+Each profile contains:
 
-- Profile name：查询中的短名称，例如 `@chat`
-- Base URL：服务根地址
-- API key：密码输入框
-- Model：服务支持的模型 ID
+- Profile name: the short name used in queries, for example `@chat`
+- Base URL: the service root address
+- API key: a password input
+- Model: a model ID supported by the service
 
-默认 Base URL 与实际请求端点如下：
+Default Base URLs and the actual request endpoints:
 
-| 配置 | 默认 Base URL | 追加端点 | 鉴权方式 |
+| Profile | Default Base URL | Appended endpoint | Authentication |
 | --- | --- | --- | --- |
 | Chat Completions | `https://api.openai.com/v1` | `/chat/completions` | `Authorization: Bearer` |
 | Responses | `https://api.openai.com/v1` | `/responses` | `Authorization: Bearer` |
 | Claude | `https://api.anthropic.com/v1` | `/messages` | `x-api-key` |
 
-如果 Base URL 已经以对应端点结尾，插件不会重复追加。自定义服务必须使用 `http` 或 `https`，并返回所选 API 类型对应的响应结构。
+If the Base URL already ends with the matching endpoint, the plugin does not append it again. Custom services must use `http` or `https` and return the response structure of the selected API type.
 
-API Key 由 Flow Launcher 的插件设置系统保存。插件不会把密钥写入语言状态文件、搜索结果或日志。
+API keys are stored by Flow Launcher's plugin settings system. The plugin never writes keys into the language state file, search results, or logs.
 
-## 使用
+## Usage
 
 ```text
 tt Hello, world
 ```
 
-默认智能双向：英文会译为简体中文；中文会译为英文。显示确认项，按 Enter 后翻译。
+Smart bilingual by default: English is translated into Simplified Chinese and Chinese into English. A confirmation item is shown; press Enter to translate.
 
 ```text
 tt r 你好
 ```
 
-临时反转“自定义语言方向”中的源语言和目标语言。
+Temporarily swaps the source and target languages from "Custom language pair" for this query.
 
 ```text
 tt ja>en こんにちは
 ```
 
-仅本次使用显式语言方向。
+Uses an explicit language direction for this query only.
 
 ```text
 tt @claude en>zh-CN Translate this text
 ```
 
-仅本次使用指定 API 配置。`@chat`、`@responses` 和 `@claude` 始终可用；也可以使用设置页填写的 Profile name。
+Uses the specified API profile for this query only. `@chat`, `@responses`, and `@claude` are always available; profile names configured on the settings page work as well.
 
 ```text
 tt :set en zh-CN
 tt :set reset
 ```
 
-第一条命令在按 Enter 后持久化自定义语言方向，第二条清除覆盖并恢复设置页中的自定义语言。语言状态存放在插件目录的 `.llm-translator-state.json`，其中不含 API Key。
+The first command persists a custom language direction after you press Enter; the second clears the override and restores the custom languages from the settings page. Language state is stored in `.llm-translator-state.json` inside the plugin directory and never contains API keys.
 
-翻译成功后：
+After a successful translation:
 
-- 按 Enter 将译文复制到剪贴板并关闭 Flow Launcher。
-- 按 `Ctrl+C` 使用 Flow Launcher 的 `CopyText` 支持复制。
+- Press Enter to copy the translation to the clipboard and close Flow Launcher.
+- Press `Ctrl+C` to copy through Flow Launcher's `CopyText` support.
 
-## 错误处理
+## Error handling
 
-- 缺少 Base URL、API Key 或模型时，不会发送网络请求；按 Enter 可打开 Flow Launcher 设置。
-- 请求超时默认是 30 秒，可配置为 1–120 秒。
-- HTTP 错误、无效 JSON 和缺失文本响应会显示为普通 Flow 结果。
-- 错误消息最多显示 500 个字符，并对已配置 API Key 和 Bearer Token 进行脱敏。
+- When the Base URL, API key, or model is missing, no network request is sent; pressing Enter opens the Flow Launcher settings.
+- The request timeout defaults to 30 seconds and is configurable from 1 to 120 seconds.
+- HTTP errors, invalid JSON, and responses without text are shown as regular Flow results.
+- Error messages are truncated to 500 characters and redact the configured API key and Bearer token.
 
-## 开发
+## Development
 
 ```powershell
+mise install
 npm test
 npm run check
 npm run package
 ```
 
-代码使用 Node.js 内置 `fetch`、`node:test` 和 PowerShell `Set-Clipboard`，没有 npm 运行时依赖。
+If mise does not switch the Node version automatically, use `mise exec -- npm test`.
 
-主要目录：
+The code relies on Node.js built-in `http`/`https` (Node 16 compatible, no global `fetch`), `node:test`, and the PowerShell `Set-Clipboard` command, with no npm runtime dependencies.
+
+Key files:
 
 ```text
-main.js                 Flow Launcher JSON-RPC 入口
-src/application.js      查询编排与一次请求控制
-src/adapters.js         三种 API 请求与响应适配
-SettingsTemplate.yaml   Flow Launcher 可视化设置
-test/                   命令、配置、HTTP 适配和状态测试
+main.js                 Flow Launcher JSON-RPC entry point
+src/application.js      Query orchestration and single-request control
+src/adapters.js         Request and response adapters for the three APIs
+SettingsTemplate.yaml   Flow Launcher visual settings
+test/                   Command, settings, HTTP adapter, and state tests
 ```
 
-接口参考：
+Reference documentation:
 
 - [Flow Launcher JSON-RPC](https://github.com/Flow-Launcher/docs/blob/main/json-rpc.md)
 - [Flow Launcher plugin settings](https://github.com/Flow-Launcher/docs/blob/main/json-rpc-settings.md)
