@@ -1,6 +1,6 @@
 {
   "name": "flow-launcher-plugin-llm-translator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Flow Launcher AI translation plugin for Chat Completions, Responses, and Claude Messages APIs",
   "main": "main.js",

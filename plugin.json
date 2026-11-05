@@ -5,7 +5,7 @@
   "Name": "LLM Translator",
   "Description": "AI translation through Chat Completions, Responses, and Claude Messages APIs",
   "Author": "hsopex",
-  "Version": "0.1.0",
+  "Version": "0.1.1",
   "Language": "javascript",
   "Website": "https://github.com/hsopex/Flow.Launcher.Plugin.LLMTranslator",
   "ExecuteFileName": "main.js",
