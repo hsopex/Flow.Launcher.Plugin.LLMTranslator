@@ -14,6 +14,7 @@ test('normalizes defaults and clamps numeric settings', () => {
 });
 
 test('uses custom mode when selected in Flow settings', () => {
+  assert.equal(normalizeSettings({ translationMode: 'Custom language pair' }).translationMode, 'custom');
   assert.equal(
     normalizeSettings({ translationMode: 'Custom language pair / 自定义语言方向' }).translationMode,
     'custom',

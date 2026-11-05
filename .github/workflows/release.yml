@@ -22,9 +22,11 @@ jobs:
       - run: npm test
       - name: Package plugin
         shell: pwsh
-        run: ./scripts/package.ps1 -OutputDirectory . -VersionLabel "${{ github.ref_name }}"
+        run: ./scripts/package.ps1
       - name: Publish GitHub release
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "${{ github.ref_name }}" "Flow.Launcher.Plugin.LLMTranslator-${{ github.ref_name }}.zip" --generate-notes
+        run: |
+          $zip = Get-ChildItem -Path dist -Filter *.zip | Select-Object -First 1
+          gh release create "${{ github.ref_name }}" $zip.FullName --generate-notes

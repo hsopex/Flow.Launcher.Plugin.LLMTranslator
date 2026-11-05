@@ -28,7 +28,7 @@ function helpResults(config) {
 
 function confirmationResult(command, profile, direction) {
   const languageDescription = direction.smart
-    ? 'Smart bilingual · 中文 → English · Other languages → 简体中文'
+    ? 'Smart bilingual · Chinese → English · Other languages → Simplified Chinese'
     : `${direction.source} → ${direction.target}`;
   return result(
     direction.smart ? 'Smart bilingual translation' : `Translate to ${direction.target}`,
@@ -46,7 +46,7 @@ function confirmationResult(command, profile, direction) {
 
 function translationResult(translation, profile, direction) {
   const languageDescription = direction.smart
-    ? 'Smart bilingual · 中文 → English · Other languages → 简体中文'
+    ? 'Smart bilingual · Chinese → English · Other languages → Simplified Chinese'
     : `${direction.source} → ${direction.target}`;
   return result(
     translation,

@@ -66,6 +66,26 @@ test('an explicit language pair overrides smart bilingual mode', async () => {
   assert.equal(result.result[0].Title, 'Hello');
 });
 
+test('migrates the previous bilingual translation mode value', async () => {
+  const result = await handleQuery({
+    input: '',
+    settings: completeSettings({ translationMode: 'Custom language pair / 自定义语言方向' }),
+    stateFile: 'Z:\\path-that-does-not-exist\\state.json',
+  });
+
+  assert.deepEqual(result.SettingsChange, { translationMode: 'Custom language pair' });
+});
+
+test('does not send a settings change for canonical values', async () => {
+  const result = await handleQuery({
+    input: '',
+    settings: completeSettings({ translationMode: 'Smart bilingual' }),
+    stateFile: 'Z:\\path-that-does-not-exist\\state.json',
+  });
+
+  assert.equal(result.SettingsChange, undefined);
+});
+
 test('configuration and API errors redact keys', async () => {
   const result = await handleQuery({
     input: ':run hello',

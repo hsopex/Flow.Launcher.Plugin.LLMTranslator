@@ -7,15 +7,18 @@ const os = require('node:os');
 const path = require('node:path');
 const { readState, writeState, clearState } = require('../src/state');
 
-test('writes, reads, and clears the language override', (context) => {
+test('writes, reads, and clears the language override', () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'llm-translator-'));
   const file = path.join(directory, 'state.json');
-  context.after(() => fs.rmSync(directory, { recursive: true, force: true }));
 
-  writeState('ja', 'en', file);
-  assert.deepEqual(readState(file), { sourceLanguage: 'ja', targetLanguage: 'en' });
-  writeState('de', 'fr', file);
-  assert.deepEqual(readState(file), { sourceLanguage: 'de', targetLanguage: 'fr' });
-  clearState(file);
-  assert.deepEqual(readState(file), {});
+  try {
+    writeState('ja', 'en', file);
+    assert.deepEqual(readState(file), { sourceLanguage: 'ja', targetLanguage: 'en' });
+    writeState('de', 'fr', file);
+    assert.deepEqual(readState(file), { sourceLanguage: 'de', targetLanguage: 'fr' });
+    clearState(file);
+    assert.deepEqual(readState(file), {});
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
 });

@@ -63,7 +63,7 @@ function normalizeDefaultProfile(value) {
 }
 
 function normalizeTranslationMode(value) {
-  const candidate = stringValue(value, 'Smart bilingual / 智能双向').toLowerCase();
+  const candidate = stringValue(value, 'Smart bilingual').toLowerCase();
   if (candidate === TRANSLATION_MODES.CUSTOM || candidate.includes('custom') || candidate.includes('自定义')) {
     return TRANSLATION_MODES.CUSTOM;
   }
@@ -144,6 +144,7 @@ function buildEndpoint(profile) {
 module.exports = {
   TRANSLATION_MODES,
   normalizeSettings,
+  normalizeTranslationMode,
   selectProfile,
   validateProfile,
   buildEndpoint,

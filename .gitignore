@@ -1,7 +1,6 @@
 node_modules/
 dist/
-*.zip
-*.log
 .llm-translator-state.json
-.idea/
-.vscode/
+.llm-translator-state.json.*.tmp
+npm-debug.log*
+*.zip
