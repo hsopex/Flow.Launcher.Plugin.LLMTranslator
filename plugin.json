@@ -1,14 +1,14 @@
 {
   "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
-  "ID": "0f5f1b0b7d8c4a8eaef8e2c3f992de61",
+  "ID": "ef0c9bcc-7f68-46d2-9cf2-eb75fec440e0",
   "ActionKeyword": "tt",
   "Name": "LLM Translator",
   "Description": "AI translation through Chat Completions, Responses, and Claude Messages APIs",
-  "Author": "hsope",
+  "Author": "hsopex",
   "Version": "0.1.0",
   "Language": "javascript",
   "Website": "https://github.com/hsopex/Flow.Launcher.Plugin.LLMTranslator",
   "ExecuteFileName": "main.js",
-  "IcoPath": "Images\\app.svg",
+  "IcoPath": "Images\\app.png",
   "MinimumAppVersion": "2.0.0"
 }

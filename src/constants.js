@@ -1,7 +1,7 @@
 'use strict';
 
 const ACTION_KEYWORD = 'tt';
-const ICON_PATH = 'Images\\app.svg';
+const ICON_PATH = 'Images\\app.png';
 const STATE_FILE_NAME = '.llm-translator-state.json';
 
 const PROFILE_TYPES = Object.freeze({
